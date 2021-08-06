@@ -49,6 +49,7 @@ namespace RoleAssignmentWithWinForm
                 {
                     MessageBox.Show("Inserted");
                 }
+
                 con.Close();
 
                 retrieve();
@@ -57,6 +58,58 @@ namespace RoleAssignmentWithWinForm
             {
                 MessageBox.Show(ex.Message);
                 con.Close();
+            }
+        }
+
+        private void EditorForm_Load(object sender, EventArgs e)
+        {
+
+            listViewCustomer.Visible = false;
+            btnClear.Visible = false;
+            btnDelete.Visible = false;
+            btnRead.Visible = false;
+            btnUpdate.Visible = false;
+
+            textBox1.Text = FormLogin.passingText;
+            string sql = "select * from [User] where Email ='" + textBox1.Text + "' ";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            SqlDataReader myreader;
+            try
+            {
+                con.Open();
+                myreader = cmd.ExecuteReader();
+                while (myreader.Read())
+                {
+                    string name = myreader.GetString(3);
+                    bool create = myreader.GetBoolean(5);
+                    bool read = myreader.GetBoolean(6);
+                    bool update = myreader.GetBoolean(7);
+                    bool delete = myreader.GetBoolean(8);
+
+                    labelEditorName.Text = "Welcome, " + name;
+
+                    if (create == true)
+                    {
+                        btnClear.Visible = true;
+                    }
+                    if (update == true)
+                    {
+                        btnUpdate.Visible = true;
+                    }
+                    if (read == true)
+                    {
+                        btnRead.Visible = true;
+                    }
+                    if (delete == true)
+                    {
+                        btnDelete.Visible = true;
+                    }
+                }
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
         private void retrieve()
@@ -79,7 +132,8 @@ namespace RoleAssignmentWithWinForm
                     populateLV(row[0].ToString(), row[1].ToString(), row[2].ToString(), row[3].ToString(), row[4].ToString(), row[5].ToString());
                 }
 
-                
+                con.Close();
+
 
                 //CLEAR DT
                 dt.Rows.Clear();
@@ -88,6 +142,7 @@ namespace RoleAssignmentWithWinForm
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                con.Close();
             }
         }
 
@@ -226,59 +281,7 @@ namespace RoleAssignmentWithWinForm
             ff.Show();
         }
 
-        private void EditorForm_Load(object sender, EventArgs e)
-        {
-
-            listViewCustomer.Visible = false;
-            btnClear.Visible = false;
-            btnDelete.Visible = false;
-            btnRead.Visible = false;
-            btnUpdate.Visible = false;
-
-            textBox1.Text = FormLogin.passingText;
-            string sql = "select * from [User] where Email ='" + textBox1.Text + "' ";
-            SqlCommand cmd = new SqlCommand(sql, con);
-            SqlDataReader myreader;
-            try
-            {
-                con.Open();
-                myreader = cmd.ExecuteReader();
-                while (myreader.Read())
-                {
-                    string name = myreader.GetString(3);
-                    bool create = myreader.GetBoolean(5);
-                    bool read = myreader.GetBoolean(6);
-                    bool update = myreader.GetBoolean(7);
-                    bool delete = myreader.GetBoolean(8);
-
-                    labelEditorName.Text = "Welcome, " + name;
-
-                    if (create == true)
-                    {
-                        btnClear.Visible = true;
-                    }
-                    if (update == true)
-                    {
-                        btnUpdate.Visible = true;
-                    }
-                    if (read == true)
-                    {
-                        btnRead.Visible = true;
-                    }
-                    if (delete == true)
-                    {
-                        btnDelete.Visible = true;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-           
-            
-        }
+       
 
         private void btnRead_Click(object sender, EventArgs e)
         {
