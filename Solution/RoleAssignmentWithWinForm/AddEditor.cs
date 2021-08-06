@@ -41,9 +41,11 @@ namespace RoleAssignmentWithWinForm
             ff.Show();
         }
 
-        private void AddEditor_Load(object sender, EventArgs e)
+        private void btnBack_Click(object sender, EventArgs e)
         {
-
+            this.Close();
+            AdminPanel ff = new AdminPanel();
+            ff.Show();
         }
     }
 }

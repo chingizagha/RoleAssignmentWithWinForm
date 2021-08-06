@@ -42,6 +42,7 @@ namespace RoleAssignmentWithWinForm
             this.labelEditorPassword = new System.Windows.Forms.Label();
             this.labelEditorEmail = new System.Windows.Forms.Label();
             this.labelEditorName = new System.Windows.Forms.Label();
+            this.btnBack = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelEditorType
@@ -70,7 +71,7 @@ namespace RoleAssignmentWithWinForm
             // btnAdd
             // 
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(593, 371);
+            this.btnAdd.Location = new System.Drawing.Point(607, 48);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(112, 35);
             this.btnAdd.TabIndex = 9;
@@ -82,7 +83,7 @@ namespace RoleAssignmentWithWinForm
             // 
             this.checkBoxDelete.AutoSize = true;
             this.checkBoxDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxDelete.Location = new System.Drawing.Point(328, 371);
+            this.checkBoxDelete.Location = new System.Drawing.Point(374, 385);
             this.checkBoxDelete.Name = "checkBoxDelete";
             this.checkBoxDelete.Size = new System.Drawing.Size(75, 24);
             this.checkBoxDelete.TabIndex = 8;
@@ -93,7 +94,7 @@ namespace RoleAssignmentWithWinForm
             // 
             this.checkBoxUpdate.AutoSize = true;
             this.checkBoxUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxUpdate.Location = new System.Drawing.Point(188, 371);
+            this.checkBoxUpdate.Location = new System.Drawing.Point(234, 385);
             this.checkBoxUpdate.Name = "checkBoxUpdate";
             this.checkBoxUpdate.Size = new System.Drawing.Size(81, 24);
             this.checkBoxUpdate.TabIndex = 7;
@@ -106,7 +107,7 @@ namespace RoleAssignmentWithWinForm
             this.checkBoxRead.Checked = true;
             this.checkBoxRead.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxRead.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxRead.Location = new System.Drawing.Point(328, 317);
+            this.checkBoxRead.Location = new System.Drawing.Point(374, 331);
             this.checkBoxRead.Name = "checkBoxRead";
             this.checkBoxRead.Size = new System.Drawing.Size(67, 24);
             this.checkBoxRead.TabIndex = 6;
@@ -117,7 +118,7 @@ namespace RoleAssignmentWithWinForm
             // 
             this.checkBoxCreate.AutoSize = true;
             this.checkBoxCreate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxCreate.Location = new System.Drawing.Point(188, 317);
+            this.checkBoxCreate.Location = new System.Drawing.Point(234, 331);
             this.checkBoxCreate.Name = "checkBoxCreate";
             this.checkBoxCreate.Size = new System.Drawing.Size(76, 24);
             this.checkBoxCreate.TabIndex = 5;
@@ -175,11 +176,23 @@ namespace RoleAssignmentWithWinForm
             this.labelEditorName.TabIndex = 13;
             this.labelEditorName.Text = "Username:";
             // 
+            // btnBack
+            // 
+            this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBack.Location = new System.Drawing.Point(607, 141);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(112, 35);
+            this.btnBack.TabIndex = 26;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // AddEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.labelEditorType);
             this.Controls.Add(this.comboBoxType);
             this.Controls.Add(this.btnAdd);
@@ -194,8 +207,8 @@ namespace RoleAssignmentWithWinForm
             this.Controls.Add(this.labelEditorEmail);
             this.Controls.Add(this.labelEditorName);
             this.Name = "AddEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AddEditor";
-            this.Load += new System.EventHandler(this.AddEditor_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,5 +229,6 @@ namespace RoleAssignmentWithWinForm
         private System.Windows.Forms.Label labelEditorPassword;
         private System.Windows.Forms.Label labelEditorEmail;
         private System.Windows.Forms.Label labelEditorName;
+        private System.Windows.Forms.Button btnBack;
     }
 }

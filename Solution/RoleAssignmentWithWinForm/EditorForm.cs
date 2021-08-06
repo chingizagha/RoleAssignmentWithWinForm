@@ -13,7 +13,7 @@ namespace RoleAssignmentWithWinForm
 {
     public partial class EditorForm : Form
     {
-        static String conString = @"Data Source=DESKTOP-82S0U2V;Initial Catalog=LoginForm;Persist Security Info=True;User ID=sa;Password=murad123";
+        static string conString = @"Data Source=DESKTOP-82S0U2V;Initial Catalog=LoginForm;Persist Security Info=True;User ID=sa;Password=murad123";
         SqlConnection con = new SqlConnection(conString);
         SqlCommand cmd;
         SqlDataAdapter adapter;
@@ -33,7 +33,6 @@ namespace RoleAssignmentWithWinForm
 
         private void add(string name, string lastName, string email, string city, string phone)
         {
-            //SQL STMT
             String sql = "INSERT INTO [Customer](first_name,last_name,email,city,phone) VALUES(@NAME,@LASTNAME,@EMAIL,@CITY,@PHONE)";
             cmd = new SqlCommand(sql, con);
 
@@ -42,8 +41,6 @@ namespace RoleAssignmentWithWinForm
             cmd.Parameters.AddWithValue("@EMAIL", email);
             cmd.Parameters.AddWithValue("@CITY", city);
             cmd.Parameters.AddWithValue("@PHONE", phone);
-
-
             try
             {
                 con.Open();
@@ -62,17 +59,14 @@ namespace RoleAssignmentWithWinForm
                 con.Close();
             }
         }
-
-        //SELECT
         private void retrieve()
         {
             listViewCustomer.Items.Clear();
 
             //SQL STMT
-            String sql = "SELECT * FROM [Customer]";
+            string sql = "SELECT * FROM [Customer]";
             cmd = new SqlCommand(sql, con);
 
-            //OPEN CON,RETRIEVE,FILL LISTVIEW
             try
             {
                 con.Open();
@@ -80,13 +74,12 @@ namespace RoleAssignmentWithWinForm
                 adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
 
-                //LOOP THRU DT
                 foreach (DataRow row in dt.Rows)
                 {
-                    populateLV(row[0].ToString(), row[1].ToString(), row[2].ToString(), row[2].ToString(), row[2].ToString(), row[2].ToString());
+                    populateLV(row[0].ToString(), row[1].ToString(), row[2].ToString(), row[3].ToString(), row[4].ToString(), row[5].ToString());
                 }
 
-                con.Close();
+                
 
                 //CLEAR DT
                 dt.Rows.Clear();
@@ -95,18 +88,16 @@ namespace RoleAssignmentWithWinForm
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                con.Close();
             }
         }
 
         //UPDATE
         private void update(int id, string name, string lastName, string email, string city, string phone)
         {
-            //SQL STMT
+
             string sql = "UPDATE [Customer] SET first_name='" + name + "',last_name='" + lastName + "', email='" + email + "',city='" + city + "',phone='" + phone + "' WHERE customer_id=" + id + "";
             cmd = new SqlCommand(sql, con);
 
-            //OPEN CON,UPDATE,RETRIEVE LISTVIEW
             try
             {
                 con.Open();
@@ -122,7 +113,6 @@ namespace RoleAssignmentWithWinForm
                     txtEmail.Text = "";
                     txtCity.Text = "";
                     txtPhone.Text = "";
-
 
                     MessageBox.Show("Successfully Updated");
                 }
@@ -143,11 +133,9 @@ namespace RoleAssignmentWithWinForm
         //DELETE
         private void delete(int id)
         {
-            //SQL STMT
             String sql = "DELETE FROM [Customer] WHERE customer_id=" + id + "";
             cmd = new SqlCommand(sql, con);
 
-            //'OPEN CON,EXECUTE DELETE,CLOSE CON
             try
             {
                 con.Open();
@@ -155,9 +143,7 @@ namespace RoleAssignmentWithWinForm
                 adapter = new SqlDataAdapter(cmd);
                 adapter.DeleteCommand = con.CreateCommand();
                 adapter.DeleteCommand.CommandText = sql;
-
-                //PROMT FOR CONFIRMATION
-                if (MessageBox.Show("Sure ??", "DELETE", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                if (MessageBox.Show("Sure?", "DELETE", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
                 {
                     if (cmd.ExecuteNonQuery() > 0)
                     {
@@ -219,7 +205,6 @@ namespace RoleAssignmentWithWinForm
         private void btnDelete_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt16(listViewCustomer.SelectedItems[0].SubItems[0].Text);
-
             delete(id);
         }
 
@@ -237,6 +222,67 @@ namespace RoleAssignmentWithWinForm
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+            FormLogin ff = new FormLogin();
+            ff.Show();
+        }
+
+        private void EditorForm_Load(object sender, EventArgs e)
+        {
+
+            listViewCustomer.Visible = false;
+            btnClear.Visible = false;
+            btnDelete.Visible = false;
+            btnRead.Visible = false;
+            btnUpdate.Visible = false;
+
+            textBox1.Text = FormLogin.passingText;
+            string sql = "select * from [User] where Email ='" + textBox1.Text + "' ";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            SqlDataReader myreader;
+            try
+            {
+                con.Open();
+                myreader = cmd.ExecuteReader();
+                while (myreader.Read())
+                {
+                    string name = myreader.GetString(3);
+                    bool create = myreader.GetBoolean(5);
+                    bool read = myreader.GetBoolean(6);
+                    bool update = myreader.GetBoolean(7);
+                    bool delete = myreader.GetBoolean(8);
+
+                    labelEditorName.Text = "Welcome, " + name;
+
+                    if (create == true)
+                    {
+                        btnClear.Visible = true;
+                    }
+                    if (update == true)
+                    {
+                        btnUpdate.Visible = true;
+                    }
+                    if (read == true)
+                    {
+                        btnRead.Visible = true;
+                    }
+                    if (delete == true)
+                    {
+                        btnDelete.Visible = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+           
+            
+        }
+
+        private void btnRead_Click(object sender, EventArgs e)
+        {
+            listViewCustomer.Visible = true;
         }
     }
 }

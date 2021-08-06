@@ -155,6 +155,7 @@ namespace RoleAssignmentWithWinForm
             this.Controls.Add(this.labelName);
             this.Controls.Add(this.labelAdminName);
             this.Name = "AdminPanel";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AdminPanel";
             this.Load += new System.EventHandler(this.AdminPanel_Load);
             this.ResumeLayout(false);
